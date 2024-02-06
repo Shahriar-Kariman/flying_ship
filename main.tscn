@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://roy5r3ckbsy2"]
+
+[ext_resource type="PackedScene" uid="uid://cswkk0wo50bif" path="res://flying_craft.tscn" id="1_pcvgg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7s1pe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8g8vx"]
+albedo_color = Color(0, 0.521569, 0.521569, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_edoxw"]
+
+[node name="main" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
+mesh = SubResource("BoxMesh_7s1pe")
+surface_material_override/0 = SubResource("StandardMaterial3D_8g8vx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
+shape = SubResource("BoxShape3D_edoxw")
+
+[node name="FlyingCraft" parent="." instance=ExtResource("1_pcvgg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 85.661, 0)
+
+[node name="Camera3D" type="Camera3D" parent="FlyingCraft"]
+transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 0, 120.459, 181.619)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -39.0793, 383.418, -477.38)
