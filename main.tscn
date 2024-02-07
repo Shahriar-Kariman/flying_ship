@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://roy5r3ckbsy2"]
+[gd_scene load_steps=7 format=3 uid="uid://roy5r3ckbsy2"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_meel3"]
 [ext_resource type="PackedScene" uid="uid://cswkk0wo50bif" path="res://flying_craft.tscn" id="1_pcvgg"]
+[ext_resource type="Script" path="res://PauseControl.gd" id="2_ofsi3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7s1pe"]
 
@@ -10,6 +12,7 @@ albedo_color = Color(0, 0.521569, 0.521569, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_edoxw"]
 
 [node name="main" type="Node3D"]
+script = ExtResource("1_meel3")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -30,3 +33,49 @@ transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -39.0793, 383.418, -477.38)
+
+[node name="PauseControl" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ofsi3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -64.0
+offset_right = 48.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PauseMenu" type="Label" parent="PauseControl/VBoxContainer"]
+layout_mode = 2
+text = "Pause menu"
+
+[node name="Resume" type="Button" parent="PauseControl/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Exit" type="Button" parent="PauseControl/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="Restart" type="Button" parent="PauseControl/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[connection signal="pause" from="." to="FlyingCraft" method="_on_main_pause"]
+[connection signal="button_down" from="PauseControl/VBoxContainer/Resume" to="PauseControl" method="_on_resume_button_down"]
+[connection signal="button_down" from="PauseControl/VBoxContainer/Exit" to="PauseControl" method="_on_exit_button_down"]
+[connection signal="button_down" from="PauseControl/VBoxContainer/Restart" to="PauseControl" method="_on_restart_button_down"]

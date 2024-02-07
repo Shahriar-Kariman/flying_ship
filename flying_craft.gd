@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+var active = true
+
 var rotationAngleDegree : float
 var rotationSpeedDegree : float
 var rotationDirection : float
@@ -40,21 +42,25 @@ func my_move(delta):
 	#motionDirectionXZ = 0
 
 func _process(delta):
-	if Input.is_action_pressed("left"):
-		rotationAngleDegree = 1
-		rotationDirection = 1
-	elif Input.is_action_pressed("right"):
-		rotationAngleDegree = 1
-		rotationDirection = -1
-	else:
-		rotationAngleDegree = 0
-		rotationDirection = 0
-	
-	if Input.is_action_pressed("forward"):
-		motionDirectionXZ = -1
-	elif Input.is_action_pressed("backward"):
-		motionDirectionXZ = 1
-	else:
-		motionDirectionXZ = 0
-	my_rotate(delta)
-	my_move(delta)
+	if active:
+		if Input.is_action_pressed("left"):
+			rotationAngleDegree = 1
+			rotationDirection = 1
+		elif Input.is_action_pressed("right"):
+			rotationAngleDegree = 1
+			rotationDirection = -1
+		else:
+			rotationAngleDegree = 0
+			rotationDirection = 0
+		
+		if Input.is_action_pressed("forward"):
+			motionDirectionXZ = -1
+		elif Input.is_action_pressed("backward"):
+			motionDirectionXZ = 1
+		else:
+			motionDirectionXZ = 0
+		my_rotate(delta)
+		my_move(delta)
+
+func _on_main_pause():
+	active = false
