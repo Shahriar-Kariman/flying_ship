@@ -10,14 +10,26 @@ var motionVelocity : Vector3
 var motionSpeedXZ : float
 var motionDirectionXZ : int
 
+var motionSpeedY : float
+var motionDirectionY : float
+
 func _ready():
 	rotationAngleDegree = 0
-	rotationSpeedDegree = 12
+	rotationSpeedDegree = 14
 	rotationDirection = 0
 	
 	motionVelocity = Vector3.ZERO
-	motionSpeedXZ = 50
+	motionSpeedXZ = 64
 	motionDirectionXZ = 0
+	
+	motionSpeedY = 48
+	motionDirectionY = 0
+
+func cursor_control():
+	var mouse_positionY = get_viewport().get_mouse_position().y
+	var maxY = get_viewport().size.y
+	var normalized_position = mouse_positionY/maxY
+	motionDirectionY = 1-normalized_position*2  #gives a value between -1 and 1
 
 func my_rotate(delta):
 	var rotationVelocityDegree = rotationSpeedDegree * rotationDirection
@@ -30,19 +42,18 @@ func my_move(delta):
 	var rotationAngleRadian = float(rotationAngleDegree/360)*(PI*2)
 	var motionX = sin(rotationAngleRadian)*motionDirectionXZ
 	var motionZ = cos(rotationAngleRadian)*motionDirectionXZ
+	var motionY = motionDirectionY*motionSpeedY*delta
 	
-	motionVelocity = Vector3(motionX, 0, motionZ)
+	motionVelocity = Vector3(motionX, motionY, motionZ)
 	
 	motionVelocity.normalized()
 	
 	motionVelocity *= motionSpeedXZ
 	transform = transform.translated_local(motionVelocity*delta)
-	
-	#rotationDirection = 0
-	#motionDirectionXZ = 0
 
 func _process(delta):
 	if active:
+		cursor_control()
 		if Input.is_action_pressed("left"):
 			rotationAngleDegree = 1
 			rotationDirection = 1
