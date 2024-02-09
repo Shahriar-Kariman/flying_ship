@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://roy5r3ckbsy2"]
+[gd_scene load_steps=8 format=3 uid="uid://roy5r3ckbsy2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_meel3"]
 [ext_resource type="PackedScene" uid="uid://cswkk0wo50bif" path="res://flying_craft.tscn" id="1_pcvgg"]
+[ext_resource type="PackedScene" uid="uid://cbfvj3a337vqv" path="res://loop.tscn" id="2_j8j07"]
 [ext_resource type="Script" path="res://PauseControl.gd" id="2_ofsi3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7s1pe"]
@@ -14,19 +15,21 @@ albedo_color = Color(0, 0.521569, 0.521569, 1)
 [node name="main" type="Node3D"]
 script = ExtResource("1_meel3")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_mask = 3
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 transform = Transform3D(10000, 0, 0, 0, 1, 0, 0, 0, 10000, 0, 0, 0)
 mesh = SubResource("BoxMesh_7s1pe")
 surface_material_override/0 = SubResource("StandardMaterial3D_8g8vx")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 transform = Transform3D(10000, 0, 0, 0, 1, 0, 0, 0, 10000, 0, 0, 0)
 shape = SubResource("BoxShape3D_edoxw")
 
 [node name="FlyingCraft" parent="." instance=ExtResource("1_pcvgg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 85.661, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 201.585, 0)
+motion_mode = 1
 
 [node name="Camera3D" type="Camera3D" parent="FlyingCraft"]
 transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 0, 120.459, 181.619)
@@ -74,6 +77,15 @@ text = "Exit"
 [node name="Restart" type="Button" parent="PauseControl/VBoxContainer"]
 layout_mode = 2
 text = "Restart"
+
+[node name="loop" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(93.9004, 0, -34.3906, 0, 100, 0, 34.3906, 0, 93.9004, 143.383, 165.257, -1416.29)
+
+[node name="loop2" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(74.0699, 0, -67.1837, 0, 100, 0, 67.1837, 0, 74.0699, 437.735, 165.257, -2137.48)
+
+[node name="loop3" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(-96.3331, 0, 26.8314, 0, 100, 0, -26.8314, 0, -96.3331, -58.671, 106.387, -699.22)
 
 [connection signal="pause" from="." to="FlyingCraft" method="_on_main_pause"]
 [connection signal="button_down" from="PauseControl/VBoxContainer/Resume" to="PauseControl" method="_on_resume_button_down"]

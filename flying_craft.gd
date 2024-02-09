@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal success
+
 var active = true
 
 var rotationAngleDegree : float
@@ -15,14 +17,14 @@ var motionDirectionY : float
 
 func _ready():
 	rotationAngleDegree = 0
-	rotationSpeedDegree = 14
+	rotationSpeedDegree = 32
 	rotationDirection = 0
 	
 	motionVelocity = Vector3.ZERO
-	motionSpeedXZ = 64
+	motionSpeedXZ = 100
 	motionDirectionXZ = 0
 	
-	motionSpeedY = 48
+	motionSpeedY = 64
 	motionDirectionY = 0
 
 func cursor_control():
@@ -77,6 +79,23 @@ func _process(delta):
 			#motionDirectionXZ = 0
 		my_rotate(delta)
 		my_move(delta)
+		move_and_slide()
+		handelCollision()
+
+func handelCollision():
+	for index in range (get_slide_collision_count()):
+		var collision = get_slide_collision(index)
+		if collision.get_collider() == null:
+			continue
+		if collision.get_collider().is_in_group("inside"):
+			var loop = collision.get_collider()
+			loop.queue_free()
+		elif collision.get_collider().is_in_group("outside"):
+			var loop = collision.get_collider()
+			print("lose")
+		else:
+			continue
+		break # prevent further duplicate calls?
 
 func _on_main_pause():
 	active = false
