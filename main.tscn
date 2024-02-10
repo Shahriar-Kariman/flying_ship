@@ -30,7 +30,7 @@ transform = Transform3D(10000, 0, 0, 0, 1, 0, 0, 0, 10000, 0, 0, 0)
 shape = SubResource("BoxShape3D_edoxw")
 
 [node name="FlyingCraft" parent="." instance=ExtResource("1_pcvgg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 201.585, 0)
+transform = Transform3D(0.994553, 0, -0.104233, 0, 1, 0, 0.104233, 0, 0.994553, -819.879, 195.439, 1129.58)
 motion_mode = 1
 
 [node name="Camera3D" type="Camera3D" parent="FlyingCraft"]
@@ -38,15 +38,6 @@ transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -39.0793, 383.418, -477.38)
-
-[node name="loop" parent="." instance=ExtResource("2_j8j07")]
-transform = Transform3D(93.9004, 0, -34.3906, 0, 100, 0, 34.3906, 0, 93.9004, 143.383, 165.257, -1416.29)
-
-[node name="loop2" parent="." instance=ExtResource("2_j8j07")]
-transform = Transform3D(74.0699, 0, -67.1837, 0, 100, 0, 67.1837, 0, 74.0699, 437.735, 165.257, -2137.48)
-
-[node name="loop3" parent="." instance=ExtResource("2_j8j07")]
-transform = Transform3D(-96.3331, 0, 26.8314, 0, 100, 0, -26.8314, 0, -96.3331, -58.671, 106.387, -699.22)
 
 [node name="ScoreControl" type="Control" parent="."]
 layout_mode = 3
@@ -104,6 +95,7 @@ text = "Pause menu"
 
 [node name="Resume" type="Button" parent="PauseControl/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Did you really think I would let you pause and continue anytime you want?"
 text = "Resume"
 
 [node name="Exit" type="Button" parent="PauseControl/VBoxContainer"]
@@ -159,6 +151,15 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "End
 "
+
+[node name="loop" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(157.33, 0, -29.1055, 0, 160, 0, 29.1055, 0, 157.33, -364.839, 318.708, -98.5391)
+
+[node name="loop2" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(126.669, 0, -97.7493, 0, 160, 0, 97.7493, 0, 126.669, 753.168, 265.043, -1388.24)
+
+[node name="loop3" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(52.5765, 0, -151.115, 0, 160, 0, 151.115, 0, 52.5765, 2169.51, 265.043, -2704.85)
 
 [connection signal="pause" from="." to="FlyingCraft" method="_on_main_pause"]
 [connection signal="lose" from="FlyingCraft" to="." method="_on_end"]

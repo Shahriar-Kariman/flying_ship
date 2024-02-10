@@ -36,7 +36,7 @@ layout_mode = 2
 text = "
 You will be flying a craft going forward at a constant speed.
 You can steer the craft based on the position of you cursor on the screen. (up, down, left and right)
-Try to pass through the torus shaped gates.
+Try to pass through the gates for this level you will only need to pass through 3.
 To pause press P."
 
 [node name="Button" type="Button" parent="VBoxContainer"]
