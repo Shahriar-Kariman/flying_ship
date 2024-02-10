@@ -10,7 +10,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4k2us"]
 transparency = 1
-albedo_color = Color(1, 0.662745, 0.266667, 0.34902)
+albedo_color = Color(0.882353, 0.317647, 0, 0.643137)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ee8x2"]
 

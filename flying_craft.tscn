@@ -28,11 +28,11 @@ transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 40, 0, 45.5141, 50.9219)
 shape = SubResource("BoxShape3D_0tph1")
 
 [node name="CollisionShape3D8" type="CollisionShape3D" parent="."]
-transform = Transform3D(15, 0, 0, 0, 30, 0, 0, 0, 40, -84.2115, -23.8711, 29.3991)
+transform = Transform3D(15, 0, 0, 0, 25, 0, 0, 0, 30, -84.2115, -23.8711, 34.9207)
 shape = SubResource("BoxShape3D_0tph1")
 
 [node name="CollisionShape3D9" type="CollisionShape3D" parent="."]
-transform = Transform3D(15, 0, 0, 0, 30, 0, 0, 0, 40, 89.0517, -23.8711, 29.3991)
+transform = Transform3D(15, 0, 0, 0, 25, 0, 0, 0, 30, 89.0517, -23.8711, 36.096)
 shape = SubResource("BoxShape3D_0tph1")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="."]

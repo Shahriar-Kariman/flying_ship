@@ -1,6 +1,8 @@
 extends CharacterBody3D
 
 signal success
+signal lose
+signal lose_by_ground
 
 var active = true
 
@@ -89,13 +91,20 @@ func handelCollision():
 			continue
 		if collision.get_collider().is_in_group("inside"):
 			var loop = collision.get_collider()
+			success.emit()
 			loop.queue_free()
 		elif collision.get_collider().is_in_group("outside"):
-			var loop = collision.get_collider()
-			print("lose")
+			active = false
+			lose.emit()
+		elif collision.get_collider().is_in_group("ground"):
+			active = false
+			lose_by_ground.emit()
 		else:
 			continue
 		break # prevent further duplicate calls?
 
 func _on_main_pause():
+	active = false
+
+func _on_score_control_win():
 	active = false

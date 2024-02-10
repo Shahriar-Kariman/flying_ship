@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://roy5r3ckbsy2"]
+[gd_scene load_steps=10 format=3 uid="uid://roy5r3ckbsy2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_meel3"]
 [ext_resource type="PackedScene" uid="uid://cswkk0wo50bif" path="res://flying_craft.tscn" id="1_pcvgg"]
 [ext_resource type="PackedScene" uid="uid://cbfvj3a337vqv" path="res://loop.tscn" id="2_j8j07"]
 [ext_resource type="Script" path="res://PauseControl.gd" id="2_ofsi3"]
+[ext_resource type="Script" path="res://ScoreControl.gd" id="4_a77gg"]
+[ext_resource type="Script" path="res://EndScreenControl.gd" id="6_hvcbd"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7s1pe"]
 
@@ -15,7 +17,7 @@ albedo_color = Color(0, 0.521569, 0.521569, 1)
 [node name="main" type="Node3D"]
 script = ExtResource("1_meel3")
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="Ground" type="StaticBody3D" parent="." groups=["ground"]]
 collision_mask = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
@@ -37,8 +39,42 @@ transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -39.0793, 383.418, -477.38)
 
+[node name="loop" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(93.9004, 0, -34.3906, 0, 100, 0, 34.3906, 0, 93.9004, 143.383, 165.257, -1416.29)
+
+[node name="loop2" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(74.0699, 0, -67.1837, 0, 100, 0, 67.1837, 0, 74.0699, 437.735, 165.257, -2137.48)
+
+[node name="loop3" parent="." instance=ExtResource("2_j8j07")]
+transform = Transform3D(-96.3331, 0, 26.8314, 0, 100, 0, -26.8314, 0, -96.3331, -58.671, 106.387, -699.22)
+
+[node name="ScoreControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_a77gg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScoreControl"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 78.0001
+offset_bottom = 56.0
+
+[node name="ScoreLabel" type="Label" parent="ScoreControl/HBoxContainer"]
+layout_mode = 2
+text = "Score:"
+
+[node name="Label" type="Label" parent="ScoreControl/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
 [node name="PauseControl" type="Control" parent="."]
 visible = false
+z_index = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,16 +114,63 @@ text = "Exit"
 layout_mode = 2
 text = "Restart"
 
-[node name="loop" parent="." instance=ExtResource("2_j8j07")]
-transform = Transform3D(93.9004, 0, -34.3906, 0, 100, 0, 34.3906, 0, 93.9004, 143.383, 165.257, -1416.29)
+[node name="EndScreenControl" type="Control" parent="."]
+visible = false
+z_index = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_hvcbd")
 
-[node name="loop2" parent="." instance=ExtResource("2_j8j07")]
-transform = Transform3D(74.0699, 0, -67.1837, 0, 100, 0, 67.1837, 0, 74.0699, 437.735, 165.257, -2137.48)
+[node name="VBoxContainer" type="VBoxContainer" parent="EndScreenControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.5
+offset_top = -20.0
+offset_right = 65.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 
-[node name="loop3" parent="." instance=ExtResource("2_j8j07")]
-transform = Transform3D(-96.3331, 0, 26.8314, 0, 100, 0, -26.8314, 0, -96.3331, -58.671, 106.387, -699.22)
+[node name="text" type="Label" parent="EndScreenControl/VBoxContainer"]
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Placeholder text."
+
+[node name="Restart" type="Button" parent="EndScreenControl/VBoxContainer"]
+custom_minimum_size = Vector2(70, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Restart
+"
+
+[node name="End" type="Button" parent="EndScreenControl/VBoxContainer"]
+custom_minimum_size = Vector2(70, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "End
+"
 
 [connection signal="pause" from="." to="FlyingCraft" method="_on_main_pause"]
+[connection signal="lose" from="FlyingCraft" to="." method="_on_end"]
+[connection signal="lose" from="FlyingCraft" to="EndScreenControl" method="_on_flying_craft_lose"]
+[connection signal="lose_by_ground" from="FlyingCraft" to="." method="_on_end"]
+[connection signal="lose_by_ground" from="FlyingCraft" to="EndScreenControl" method="_on_flying_craft_lose_by_ground"]
+[connection signal="success" from="FlyingCraft" to="ScoreControl" method="_on_flying_craft_success"]
+[connection signal="win" from="ScoreControl" to="." method="_on_end"]
+[connection signal="win" from="ScoreControl" to="FlyingCraft" method="_on_score_control_win"]
+[connection signal="win" from="ScoreControl" to="EndScreenControl" method="_on_score_control_win"]
 [connection signal="button_down" from="PauseControl/VBoxContainer/Resume" to="PauseControl" method="_on_resume_button_down"]
 [connection signal="button_down" from="PauseControl/VBoxContainer/Exit" to="PauseControl" method="_on_exit_button_down"]
 [connection signal="button_down" from="PauseControl/VBoxContainer/Restart" to="PauseControl" method="_on_restart_button_down"]
+[connection signal="button_down" from="EndScreenControl/VBoxContainer/Restart" to="EndScreenControl" method="_on_button_button_down"]
+[connection signal="button_down" from="EndScreenControl/VBoxContainer/End" to="EndScreenControl" method="_on_end_button_down"]
